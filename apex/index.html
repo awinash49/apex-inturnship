@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Styled Webpage</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      body {
+        background-color: #f9f9f9;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+      }
+
+      /* Head */
+      header {
+        background: #4caf50;
+        color: white;
+        padding: 1rem 0;
+        text-align: center;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 2.5rem;
+      }
+
+      nav ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        background: #333;
+        margin: 0;
+      }
+
+      nav ul li {
+        margin: 0 1rem;
+      }
+
+      nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      nav ul li a:hover {
+        text-decoration: underline;
+      }
+
+    
+      section {
+        padding: 2rem;
+        margin: 1rem auto;
+        max-width: 800px;
+        background: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+      }
+
+    
+      footer {
+        background: #333;
+        color: white;
+        text-align: center;
+        padding: 1rem 0;
+        margin-top: 2rem;
+      }
+
+      button {
+        background: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      button:hover {
+        background: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Welcome to My Webpage</h1>
+      <nav>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section id="about">
+      <h2>About Me</h2>
+      <p>Hi, I’m a web developer learning HTML, CSS, and JavaScript. I enjoy creating user-friendly websites.</p>
+    </section>
+
+    <section id="services">
+      <h2>Services</h2>
+      <ul>
+        <li>Web Design</li>
+        <li>Frontend Development</li>
+        <li>Backend Development</li>
+      </ul>
+      <button id="colorButton">Change Background Color</button>
+    </section>
+
+    <footer>
+      <p>&copy; <span id="currentYear"></span> My Webpage. All rights reserved.</p>
+    </footer>
+
+    <script>
+    //change thebbackground color
+      document.getElementById("colorButton").addEventListener("click", function () {
+        const randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+        document.body.style.backgroundColor = randomColor;
+      });
+
+       //display alert
+      const navLinks = document.querySelectorAll("nav ul li a");
+      navLinks.forEach((link) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault(); // Prevent the default link action
+          alert(`You clicked on: ${link.textContent}`);
+        });
+      });
+
+      //show the current year footer
+      const yearSpan = document.getElementById("currentYear");
+      yearSpan.textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
+
