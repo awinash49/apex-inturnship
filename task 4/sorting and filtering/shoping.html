@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Listing</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 20px;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .product {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s;
+        }
+        .product:hover {
+            transform: translateY(-5px);
+        }
+        .product h3 {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        .product p {
+            font-size: 14px;
+            color: #666;
+        }
+        .product-list img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="filters">
+            <select id="categoryFilter">
+                <option value="all">All Categories</option>
+                <option value="electronics">Electronics</option>
+                <option value="clothing">Clothing</option>
+            </select>
+            <select id="priceFilter">
+                <option value="all">All Prices</option>
+                <option value="low">Low to High</option>
+                <option value="high">High to Low</option>
+            </select>
+            <select id="sortFilter">
+                <option value="none">Sort By</option>
+                <option value="rating">Rating</option>
+            </select>
+        </div>
+        <div class="product-list" id="productList"></div>
+    </div>
+
+    <script>
+        const products = [
+            { name: "Laptop", category: "electronics", price: 800, rating: 4.5, image: "laptop.jpg" },
+            { name: "Smartphone", category: "electronics", price: 500, rating: 4.7, image: "mobil2.jpg" },
+            { name: "Headphones", category: "electronics", price: 100, rating: 4.3, image: "headphone.jpg" },
+            { name: "Tablet", category: "electronics", price: 300, rating: 4.6, image: "tablet.jpg" },
+            { name: "Smartwatch", category: "electronics", price: 200, rating: 4.8, image: "smartwatch.jpg" },
+            { name: "Gaming Console", category: "electronics", price: 400, rating: 4.4, image: "gaming.jpg" },
+            { name: "Shirt", category: "clothing", price: 20, rating: 4.0, image: "shirt.jpg" },
+            { name: "Jeans", category: "clothing", price: 40, rating: 4.2, image: "jeans.jpg" },
+            { name: "Sneakers", category: "clothing", price: 60, rating: 4.6, image: "sneaker.jpg" },
+            { name: "Jacket", category: "clothing", price: 80, rating: 4.5, image: "jacket.jpg" },
+            { name: "Hat", category: "clothing", price: 15, rating: 4.1, image: "hat.jpg" },
+            { name: "Scarf", category: "clothing", price: 25, rating: 4.3, image: "scarf.jpg" }
+        ];
+        
+        function renderProducts(filterCategory = "all", priceSort = "all", sortCriteria = "none") {
+            let filteredProducts = [...products];
+            
+            if (filterCategory !== "all") {
+                filteredProducts = filteredProducts.filter(product => product.category === filterCategory);
+            }
+            
+            if (priceSort === "low") {
+                filteredProducts.sort((a, b) => a.price - b.price);
+            } else if (priceSort === "high") {
+                filteredProducts.sort((a, b) => b.price - a.price);
+            }
+            
+            if (sortCriteria === "rating") {
+                filteredProducts.sort((a, b) => b.rating - a.rating);
+            }
+            
+            const productList = document.getElementById("productList");
+            productList.innerHTML = "";
+            
+            filteredProducts.forEach(product => {
+                const productDiv = document.createElement("div");
+                productDiv.classList.add("product");
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>Category: ${product.category}</p>
+                    <p>Price: $${product.price}</p>
+                    <p>Rating: ${product.rating}</p>
+                `;
+                productList.appendChild(productDiv);
+            });
+        }
+        
+        document.getElementById("categoryFilter").addEventListener("change", (e) => {
+            renderProducts(e.target.value, document.getElementById("priceFilter").value, document.getElementById("sortFilter").value);
+        });
+        
+        document.getElementById("priceFilter").addEventListener("change", (e) => {
+            renderProducts(document.getElementById("categoryFilter").value, e.target.value, document.getElementById("sortFilter").value);
+        });
+        
+        document.getElementById("sortFilter").addEventListener("change", (e) => {
+            renderProducts(document.getElementById("categoryFilter").value, document.getElementById("priceFilter").value, e.target.value);
+        });
+        
+        renderProducts();
+    </script>
+</body>
+</html>
